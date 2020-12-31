@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+
+ul {
+	list-style:none;
+}
+
+li {
+	list-style:none;
+}
+
+@media all and (max-width : 1024px) {
+	.body_main {
+		width: 100%;
+		min-width: 320px;
+	}
+}
+
+@media all and (min-width:1025px) {
+	.body_main {
+		width: 1025px;
+	}
+}
+
+.body_main {
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-left-color: #efefef;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #efefef;
+
+	z-index: 999999;
+}
+
+.main_title {
+	width: 1025px;
+}

@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+#userInfoListDiv {
+	width: 900px;
+	margin: auto;
+	margin-top: 50px;
+}
+
+.searchUserManage {
+	margin-bottom : 20px;
+	float: right;
+}
+
+#userInfoListTable {
+	width: 850px;
+	margin: auto;
+	
+	text-align: center;
+}
+
+.userInfoListTableHead {
+	height: 50px;
+	border-bottom-style: solid;
+	
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.userInfoListTableBody {
+	height: 55px;
+}
+
+.userNoTd {
+	width: 84px;
+}
+
+.userIdTd {
+	width: 176px;
+}
+
+.userNameTd {
+	width: 140px;
+}
+
+.userJoindateTd {
+	width: 250px;
+}
+
+.userBtnTd {
+	width: 200px;
+}
+
+.nowPage {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}

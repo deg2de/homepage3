@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/bootstrap/**" location="/bootstrap/" />
+	<resources mapping="/summernote/**" location="/summernote/" />
+	<resources mapping="/css/**" location="/css/" />
+	<resources mapping="/img/**" location="/img/" />
+	<resources mapping="/js/**" location="/js/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.deg2de.homepagests" />
+	
+	<!-- Controller Bean -->
+	<!-- 입력주소값이 없을 경우(/) main이 view-name인 controller를 검색한다. -->
+	<!--
+	<view-controller path="/" view-name="main"/>
+	-->
+
+	<context:annotation-config />
+	
+	<!-- 파일전송용 Bean -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- maximum file size in bytes 50MB -->
+		<beans:property name="maxUploadSize" value="52428800" />
+	</beans:bean>
+	
+	<!-- 테스트용 오라클 DAO방식 연결 Bean -->
+	<beans:bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<beans:property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<beans:property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:XE" />
+		<beans:property name="user" value="Seibiuser" />
+		<beans:property name="password" value="Seibi1234" />
+	</beans:bean>
+	<!-- 테스트용 MYSQL DAO방식 연결 Bean -->
+	<beans:bean id="dataSource3" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<beans:property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<beans:property name="jdbcUrl"
+			value="jdbc:mysql://localhost/homepage2?characterEncoding=utf8" />
+		<beans:property name="user" value="SeibiUser" />
+		<beans:property name="password" value="Seibi1234" />
+	</beans:bean>
+	<!-- 실장용 MYSQL DAO방식 연결 Bean -->
+	<beans:bean id="dataSource2" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<beans:property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<beans:property name="jdbcUrl" value="jdbc:mysql://localhost/deg2de" />
+		<beans:property name="user" value="SeibiUser" />
+		<beans:property name="password" value="Seibi1234" />
+	</beans:bean>
+	
+	<!-- 테스트용 MYSQL Mybatis방식 연결 Bean -->
+	<beans:bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
+		<beans:property value="com.mysql.jdbc.Driver" name="driverClassName"/>
+		<beans:property value="jdbc:mysql://localhost/homepage2?characterEncoding=utf8" name="url"/>
+		<beans:property value="SeibiUser" name="username"/>
+		<beans:property value="Seibi1234" name="password"/>
+	</beans:bean>
+	<!-- 실장용 MYSQL Mybatis방식 연결 Bean -->
+	<beans:bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource4">
+		<beans:property value="com.mysql.jdbc.Driver" name="driverClassName"/>
+		<beans:property value="jdbc:mysql://localhost/deg2de" name="url"/>
+		<beans:property value="SeibiUser" name="username"/>
+		<beans:property value="Seibi1234" name="password"/>
+	</beans:bean>
+	
+	<!-- Mybatis 설정용 Bean -->
+	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="mapperLocations" value="classpath:com/deg2de/homepagests/dao/mapper/*.xml" />
+	</beans:bean>
+	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
+	</beans:bean>
+	
+	<aop:aspectj-autoproxy/>
+	<beans:bean id="logAop" class="com.deg2de.homepagests.aop.LogAop"></beans:bean>
+	
+</beans:beans>

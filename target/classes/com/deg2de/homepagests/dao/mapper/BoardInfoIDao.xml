@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.deg2de.homepagests.dao.BoardInfoIDao">
+	<select id="selectBoardInfo" resultType="com.deg2de.homepagests.dto.BoardInfoDto">  
+		SELECT BOARD_CODE AS boardCode,
+		 BOARD_NAME AS boardName
+		FROM BOARD_TABLE
+	</select>
+	
+	<select id="selectTypeInfo" resultType="com.deg2de.homepagests.dto.BoardTypeInfoDto">  
+		SELECT TYPE_CODE AS typeCode,
+		 TYPE_NAME AS typeName,
+		 TYPE_BOARD_CODE AS typeBoardCode
+		FROM TYPE_TABLE
+	</select>
+	
+	<select id="selectBoardToCode" resultType="com.deg2de.homepagests.dto.BoardInfoDto">  
+		SELECT BOARD_CODE AS boardCode,
+		 BOARD_NAME AS boardName
+		FROM BOARD_TABLE
+		WHERE BOARD_CODE = #{boardCode}
+	</select>
+	
+	<select id="selectBoardTypeInfoBc" resultType="com.deg2de.homepagests.dto.BoardTypeInfoDto">  
+		SELECT TYPE_CODE AS typeCode,
+		 TYPE_NAME AS typeName,
+		 TYPE_BOARD_CODE AS typeBoardCode
+		FROM TYPE_TABLE
+		WHERE TYPE_BOARD_CODE = #{boardCode}
+	</select>
+	
+	<insert id="createBoard">
+		INSERT INTO BOARD_TABLE
+		(BOARD_NAME)
+		VALUES(#{boardName})
+	</insert>
+	
+	<delete id="deleteBoard">
+		DELETE FROM BOARD_TABLE
+		WHERE BOARD_CODE = #{boardCode}
+	</delete>
+	
+	<insert id="createBoardType">
+		INSERT INTO TYPE_TABLE
+		(TYPE_NAME, TYPE_BOARD_CODE)
+		VALUES(#{boardTypeName}, #{boardCode})
+	</insert>
+	
+	<delete id="deleteBoardType">
+		DELETE FROM TYPE_TABLE
+		WHERE TYPE_CODE = #{boardTypeCode}
+	</delete>
+	
+	<select id="selectBoardName" resultType="com.deg2de.homepagests.dto.BoardNameDto">  
+		SELECT BOARD_NAME AS boardName
+		FROM BOARD_TABLE
+	</select>
+	
+	<select id="selectBoardTypeName" resultType="com.deg2de.homepagests.dto.BoardTypeNameDto">  
+		SELECT t1.BOARD_NAME AS boardName, t2.TYPE_NAME AS typeName
+		FROM BOARD_TABLE AS t1, TYPE_TABLE AS t2
+		WHERE t1.BOARD_CODE = t2.TYPE_BOARD_CODE
+	</select>
+	
+</mapper>

@@ -1,0 +1,122 @@
+@charset "UTF-8";
+
+#boardManageDiv {
+	width: 1000px;
+	height: 600px;
+	
+	margin: auto;
+	
+	background-color: #DFDFDF;
+	border-style: ridge;
+	border-width: 3px;
+	border-color: #343a40;
+	box-shadow: 10px 10px 20px -2px;
+}
+
+#boardDiv {
+	width: 475px;
+	height: 500px;
+	
+	float: left;
+	
+	background-color: antiquewhite;
+	border-style: ridge;
+	border-width: 1px;
+	border-color: gray;
+}
+
+#typeDiv {
+	width: 475px;
+	height: 500px;
+	
+	float: right;
+	
+	background-color: aliceblue;
+	border-style: ridge;
+	border-width: 1px;
+	border-color: gray;
+}
+
+#BoardInfoTextDiv {
+	width: 100%;
+	height: 50px;
+	
+	margin-top: 15px;
+	float: left;
+}
+
+#beforeBoardDiv {
+	width:220px;
+	height:450px;
+	
+	float: left;
+}
+
+#boardTypeDiv {
+	width:220px;
+	height:450px;
+	
+	float: left;
+}
+
+#boardBtnDiv {
+	width:220px;
+	height:450px;
+	
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 150px;
+}
+
+#boardTypeBtnDiv {
+	width:220px;
+	height:450px;
+	
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 150px;
+}
+
+.boardSelect {
+	width: -webkit-fill-available;
+	height: -webkit-fill-available;
+}
+
+.boardBtn {
+	width: 60px;
+	
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.inputBoardName {
+	float: left;
+}
+
+.inputBoardTypeName {
+	float: left;
+}
+
+.boardCreateBtn {
+	
+	width: 100%;
+	
+	float: left;
+	
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.boardTypeCreateBtn {
+	
+	width: 100%;
+	
+	float: left;
+	
+	margin-top: 10px;
+	margin-bottom: 10px;
+}

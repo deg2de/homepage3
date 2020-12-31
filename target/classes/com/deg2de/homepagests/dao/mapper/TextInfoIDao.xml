@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.deg2de.homepagests.dao.TextInfoIDao">	
+	<select id="selectAllTextList" resultType="com.deg2de.homepagests.dto.TextListInfoDto">  
+		SELECT t3.TEXT_NO AS textNo,
+		t1.BOARD_NAME AS boardName,
+		t2.TYPE_NAME AS typeName,
+		t4.USER_INFO_ID AS id,
+		t3.TEXT_TITLE AS textTitle,
+		t3.TEXT_WRITE_DATE AS textWriteDate,
+		t3.TEXT_COUNT AS textCount
+		FROM BOARD_TABLE AS t1, TYPE_TABLE AS t2, TEXT_TABLE AS t3, USER_INFO AS t4
+		WHERE t3.TEXT_BOARD_CODE = t1.BOARD_CODE AND t3.TEXT_TYPE_CODE = t2.TYPE_CODE AND t3.TEXT_ID = t4.USER_INFO_ID
+		ORDER BY t3.TEXT_NO DESC
+	</select>
+	
+	<select id="selectNewTextInfo" resultType="com.deg2de.homepagests.dto.TextDesInfoDto">  
+		SELECT t1.BOARD_NAME AS boardName,
+		t2.TYPE_NAME AS typeName,
+		t3.TEXT_TITLE AS textTitle,
+		t3.TEXT_NO AS textNo,
+		t4.USER_INFO_ID AS textWriter,
+		t3.TEXT_COUNT AS textCount,
+		t3.TEXT_WRITE_DATE AS textWriteDate,
+		t3.TEXT_LAST_UPD_DATE AS textUpdateDate,
+		t3.TEXT_DES AS textDes
+		FROM BOARD_TABLE AS t1, TYPE_TABLE AS t2, TEXT_TABLE AS t3, USER_INFO AS t4
+		WHERE t3.TEXT_BOARD_CODE = t1.BOARD_CODE AND t3.TEXT_TYPE_CODE = t2.TYPE_CODE AND t3.TEXT_ID = t4.USER_INFO_ID
+		ORDER BY t3.TEXT_NO DESC LIMIT 1
+	</select>
+	
+	<select id="selectTextInfo" resultType="com.deg2de.homepagests.dto.TextDesInfoDto">  
+		SELECT t1.BOARD_NAME AS boardName,
+		t2.TYPE_NAME AS typeName,
+		t3.TEXT_TITLE AS textTitle,
+		t3.TEXT_NO AS textNo,
+		t4.USER_INFO_ID AS textWriter,
+		t3.TEXT_COUNT AS textCount,
+		t3.TEXT_WRITE_DATE AS textWriteDate,
+		t3.TEXT_LAST_UPD_DATE AS textUpdateDate,
+		t3.TEXT_DES AS textDes
+		FROM BOARD_TABLE AS t1, TYPE_TABLE AS t2, TEXT_TABLE AS t3, USER_INFO AS t4
+		WHERE t3.TEXT_BOARD_CODE = t1.BOARD_CODE AND t3.TEXT_TYPE_CODE = t2.TYPE_CODE AND t3.TEXT_ID = t4.USER_INFO_ID AND TEXT_NO = #{textNo}
+	</select>
+	
+	<delete id="deleteTextInfo">
+		DELETE FROM TEXT_TABLE
+		WHERE TEXT_NO = #{textNo}
+	</delete>
+	
+	<select id="selectTextCommentCount" resultType="int">  
+		SELECT COUNT(COMMENT_TEXT_NO) FROM COMMENT_TABLE WHERE COMMENT_TEXT_NO = #{textNo}
+	</select>
+	
+	<insert id="insertTextDes" parameterType="com.deg2de.homepagests.dto.WriteTextDesDto">
+		INSERT INTO TEXT_TABLE
+		(TEXT_BOARD_CODE, TEXT_TYPE_CODE, TEXT_ID, TEXT_TITLE,
+		TEXT_DES, TEXT_WRITE_DATE, TEXT_LAST_UPD_DATE,
+		TEXT_COUNT)
+		VALUES(#{textBoardCode}, #{textTypeCode},
+		#{textId}, #{textTitle}, #{textDes}, #{textWriteDate}, #{textLastUpdDate},
+		#{textCount})
+	</insert>
+	
+	<update id="updateTextViewCount">
+		UPDATE TEXT_TABLE SET TEXT_COUNT=TEXT_COUNT+1 WHERE TEXT_NO=#{textNo}
+	</update>
+	
+	<select id="selectImageInfo" resultType="com.deg2de.homepagests.dto.ImageFileInfoDto">  
+		SELECT IMAGE_NO AS imageNo,
+		IMAGE_TEXT_NO AS imageTextNo,
+		IMAGE_FILE_NAME AS imageFileName
+		FROM IMAGE_TABLE
+		WHERE IMAGE_TEXT_NO = #{textNo}
+	</select>
+	
+	<select id="selectWriteTextNo" resultType="int">
+		SELECT TEXT_NO
+		FROM TEXT_TABLE
+		WHERE TEXT_ID = #{textId} AND TEXT_WRITE_DATE = #{textWriteDate}
+	</select>
+	
+	<insert id="insertImageInfo">  
+		INSERT INTO IMAGE_TABLE
+		(IMAGE_TEXT_NO, IMAGE_FILE_NAME)
+		VALUES(#{imageTextNo}, #{imageFileName})
+	</insert>
+	
+	<update id="updateTextDes" parameterType="com.deg2de.homepagests.dto.UpdateTextDesDto">
+		UPDATE TEXT_TABLE SET TEXT_BOARD_CODE=#{textBoardCode},
+		TEXT_TYPE_CODE=#{textTypeCode}, TEXT_TITLE=#{textTitle}, TEXT_DES=#{textDes},
+		TEXT_LAST_UPD_DATE=#{textLastUpdDate} WHERE TEXT_NO=#{textNo}
+	</update>
+	
+	<select id="selectTextImage" resultType="com.deg2de.homepagests.dto.ImageFileInfoDto">  
+		SELECT IMAGE_NO AS imageNo,
+		IMAGE_TEXT_NO AS imageTextNo,
+		IMAGE_FILE_NAME AS imageFileName
+		FROM IMAGE_TABLE
+		WHERE IMAGE_TEXT_NO = #{textNo}
+	</select>
+	
+	<delete id="deleteImageInfo">
+		DELETE FROM IMAGE_TABLE
+		WHERE IMAGE_TEXT_NO = #{imageTextNo} AND IMAGE_FILE_NAME = #{imageFileName}
+	</delete>
+	
+	<select id="allSearchTitle" resultType="com.deg2de.homepagests.dto.TextListInfoDto">  
+		SELECT t3.TEXT_NO AS textNo,
+		t1.BOARD_NAME AS boardName,
+		t2.TYPE_NAME AS typeName,
+		t4.USER_INFO_ID AS id,
+		t3.TEXT_TITLE AS textTitle,
+		t3.TEXT_WRITE_DATE AS textWriteDate,
+		t3.TEXT_COUNT AS textCount
+		FROM BOARD_TABLE AS t1, TYPE_TABLE AS t2, TEXT_TABLE AS t3, USER_INFO AS t4
+		WHERE t3.TEXT_BOARD_CODE = t1.BOARD_CODE AND t3.TEXT_TYPE_CODE = t2.TYPE_CODE AND t3.TEXT_ID = t4.USER_INFO_ID AND t3.TEXT_TITLE LIKE CONCAT('%',#{searchText},'%')
+		ORDER BY t3.TEXT_NO DESC
+	</select>
+	
+	<select id="allSearchTitleText" resultType="com.deg2de.homepagests.dto.TextListInfoDto">  
+		SELECT t3.TEXT_NO AS textNo,
+		t1.BOARD_NAME AS boardName,
+		t2.TYPE_NAME AS typeName,
+		t4.USER_INFO_ID AS id,
+		t3.TEXT_TITLE AS textTitle,
+		t3.TEXT_WRITE_DATE AS textWriteDate,
+		t3.TEXT_COUNT AS textCount
+		FROM BOARD_TABLE AS t1, TYPE_TABLE AS t2, TEXT_TABLE AS t3, USER_INFO AS t4
+		WHERE t3.TEXT_BOARD_CODE = t1.BOARD_CODE AND t3.TEXT_TYPE_CODE = t2.TYPE_CODE AND t3.TEXT_ID = t4.USER_INFO_ID
+		AND (t3.TEXT_TITLE LIKE CONCAT('%',#{searchText},'%') OR t3.TEXT_DES LIKE CONCAT('%',#{searchText},'%'))
+		ORDER BY t3.TEXT_NO DESC
+	</select>
+	
+	<select id="allSearchBoard" resultType="com.deg2de.homepagests.dto.TextListInfoDto">  
+		SELECT t3.TEXT_NO AS textNo,
+		t1.BOARD_NAME AS boardName,
+		t2.TYPE_NAME AS typeName,
+		t4.USER_INFO_ID AS id,
+		t3.TEXT_TITLE AS textTitle,
+		t3.TEXT_WRITE_DATE AS textWriteDate,
+		t3.TEXT_COUNT AS textCount
+		FROM BOARD_TABLE AS t1, TYPE_TABLE AS t2, TEXT_TABLE AS t3, USER_INFO AS t4
+		WHERE t3.TEXT_BOARD_CODE = t1.BOARD_CODE AND t3.TEXT_TYPE_CODE = t2.TYPE_CODE AND t3.TEXT_ID = t4.USER_INFO_ID
+		AND (t3.TEXT_BOARD_CODE IN (SELECT t1.BOARD_CODE FROM BOARD_TABLE WHERE t1.BOARD_NAME = #{searchText}))
+		ORDER BY t3.TEXT_NO DESC
+	</select>
+	
+	<select id="allSearchType" resultType="com.deg2de.homepagests.dto.TextListInfoDto">  
+		SELECT t3.TEXT_NO AS textNo,
+		t1.BOARD_NAME AS boardName,
+		t2.TYPE_NAME AS typeName,
+		t4.USER_INFO_ID AS id,
+		t3.TEXT_TITLE AS textTitle,
+		t3.TEXT_WRITE_DATE AS textWriteDate,
+		t3.TEXT_COUNT AS textCount
+		FROM BOARD_TABLE AS t1, TYPE_TABLE AS t2, TEXT_TABLE AS t3, USER_INFO AS t4
+		WHERE t3.TEXT_BOARD_CODE = t1.BOARD_CODE AND t3.TEXT_TYPE_CODE = t2.TYPE_CODE AND t3.TEXT_ID = t4.USER_INFO_ID
+		AND t3.TEXT_TYPE_CODE = SELECT t1.TYPE_CODE FROM t2 WHERE t1.TYPE_NAME = #{searchText})
+		ORDER BY t3.TEXT_NO DESC
+	</select>
+	
+	<select id="allSearchUserid" resultType="com.deg2de.homepagests.dto.TextListInfoDto">  
+		SELECT t3.TEXT_NO AS textNo,
+		t1.BOARD_NAME AS boardName,
+		t2.TYPE_NAME AS typeName,
+		t4.USER_INFO_ID AS id,
+		t3.TEXT_TITLE AS textTitle,
+		t3.TEXT_WRITE_DATE AS textWriteDate,
+		t3.TEXT_COUNT AS textCount
+		FROM BOARD_TABLE AS t1, TYPE_TABLE AS t2, TEXT_TABLE AS t3, USER_INFO AS t4
+		WHERE t3.TEXT_BOARD_CODE = t1.BOARD_CODE AND t3.TEXT_TYPE_CODE = t2.TYPE_CODE AND t3.TEXT_ID = t4.USER_INFO_ID AND t3.TEXT_ID LIKE CONCAT('%',#{searchText},'%')
+		ORDER BY t3.TEXT_NO DESC
+	</select>
+	
+	<select id="allSearchBdTp" resultType="com.deg2de.homepagests.dto.TextListInfoDto">  
+		SELECT t3.TEXT_NO AS textNo,
+		t1.BOARD_NAME AS boardName,
+		t2.TYPE_NAME AS typeName,
+		t4.USER_INFO_ID AS id,
+		t3.TEXT_TITLE AS textTitle,
+		t3.TEXT_WRITE_DATE AS textWriteDate,
+		t3.TEXT_COUNT AS textCount
+		FROM BOARD_TABLE AS t1, TYPE_TABLE AS t2, TEXT_TABLE AS t3, USER_INFO AS t4
+		WHERE t3.TEXT_BOARD_CODE = t1.BOARD_CODE AND t3.TEXT_TYPE_CODE = t2.TYPE_CODE AND t3.TEXT_ID = t4.USER_INFO_ID
+		AND (t3.TEXT_BOARD_CODE IN (SELECT t1.BOARD_CODE FROM BOARD_TABLE WHERE t1.BOARD_NAME = #{searchText1}))
+		AND (t3.TEXT_TYPE_CODE IN (SELECT t2.TYPE_CODE FROM TYPE_TABLE WHERE t2.TYPE_NAME = #{searchText2}))
+		ORDER BY t3.TEXT_NO DESC
+	</select>
+	
+	<select id="selectComInfo" resultType="com.deg2de.homepagests.dto.CommentInfoDto">  
+		SELECT COMMENT_NO AS commentNo,
+		COMMENT_TEXT_NO AS commentTextNo,
+		COMMENT_ID AS commentId,
+		COMMENT_DES AS commentDes,
+		COMMENT_WRITE_DATE AS commentWriteDate
+		FROM COMMENT_TABLE
+		WHERE COMMENT_TEXT_NO = #{commentTextNo}
+		ORDER BY COMMENT_NO DESC
+	</select>
+	
+	<insert id="insertCmtInfo" parameterType="com.deg2de.homepagests.dto.CommentWriteDto">
+		INSERT INTO COMMENT_TABLE
+		(COMMENT_TEXT_NO, COMMENT_ID, COMMENT_DES, COMMENT_WRITE_DATE)
+		VALUES(#{commentTextNo}, #{commentId},
+		#{commentDes}, #{commentWriteDate})
+	</insert>
+	
+	<delete id="deleteCmtInfo">
+		DELETE FROM COMMENT_TABLE
+		WHERE COMMENT_NO = #{commentTextNo} AND COMMENT_ID = #{commentId}
+	</delete>
+	
+</mapper>

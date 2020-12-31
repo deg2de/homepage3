@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+
+.userJoin_input {
+	max-width: 680px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-left: auto;
+	margin-right: auto;
+
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+.userJoin_input_check {
+	max-width: 680px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-left: auto;
+	margin-right: auto;
+
+	padding-left: 50px;
+}
+
+.userInfo_btn {
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+
+.userJoin_input_check_btn {
+	width: 50px;
+	height: 50px;
+	margin: 0 auto;
+
+	line-height: 20px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	color: black;
+}

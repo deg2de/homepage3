@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+#textView {
+	width: 880px;
+	margin: auto;
+	margin-top: 50px;
+	padding-bottom: 50px;
+}
+
+#textViewTable {
+	width: 860px;
+	margin: auto;
+}
+
+#textViewHead {
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: #efefef;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #efefef;
+	text-align: center;
+}
+
+
+#textViewBoardNameType {
+	width: 860px;
+	height: 50px;
+	text-align: left;
+	font-size: 14px;
+	color: gray;
+}
+
+#textInputBdDiv {
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #efefef;
+}
+
+#textInputTypeDiv {
+	padding-left: 10px;
+}
+
+.textInputBTDiv {
+	float: left;
+}
+
+.textInputSelect {
+	width: 150px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#textViewTitle {
+	width: 860px;
+	height: 50px;
+	text-align: left;
+	font-size: 15px;
+}
+
+#textWriteTitle{
+	width: 800px;
+	margin-left: 10px;
+}
+
+#textViewTitleDiv {
+	width: 860px;
+	
+	display:inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#textViewBody {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #efefef;
+}
+
+#textViewDes {
+	width: 860px;
+	min-height: 300px;
+	margin: auto;
+	padding-top: 10px;
+	padding-botton: 10px;
+	
+	word-wrap: break-word;
+}
+
+#textViewDesDiv {
+	min-height: 300px;
+}
+
+#textViewBtn {
+	height: 70px;
+	padding-left: 369px;
+	padding-right: 369px;
+}
+
+#textViewBtnDiv {
+	width: 122px;
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.deg2de.homepagests.dao.UserInfoIDao">
+
+	<resultMap id="userInfoDtoMap" type="com.deg2de.homepagests.dto.UserInfoDto">
+		<result property="id" column="USER_INFO_ID" />
+		<result property="pw" column="USER_INFO_PW" />
+		<result property="name" column="USER_INFO_NAME" />
+		<result property="mailAdd" column="USER_INFO_MAIL_ADD" />
+		<result property="phoNum" column="USER_INFO_PHO_NUM" />
+		<result property="userType" column="USER_INFO_USER_TYPE" />
+		<result property="joinDate" column="USER_INFO_JOIN_DATE" />
+		<result property="lastUpdDate" column="USER_INFO_LAST_UPD_DATE" />
+		<result property="picAdd" column="USER_INFO_PIC_ADD" />
+	</resultMap>
+
+	<select id="selectId" resultMap="userInfoDtoMap">
+		SELECT * FROM USER_INFO WHERE
+		USER_INFO_ID = #{id}
+	</select>
+
+	<select id="selectMailAdd" resultMap="userInfoDtoMap">
+		SELECT * FROM USER_INFO
+		WHERE USER_INFO_MAIL_ADD = #{mailAdd}
+	</select>
+
+	<insert id="insertUserInfo" parameterType="com.deg2de.homepagests.dto.UserInfoDto">
+		INSERT INTO USER_INFO
+		(USER_INFO_ID, USER_INFO_PW, USER_INFO_NAME, USER_INFO_MAIL_ADD,
+		USER_INFO_PHO_NUM, USER_INFO_USER_TYPE, USER_INFO_JOIN_DATE,
+		USER_INFO_LAST_UPD_DATE, USER_INFO_PIC_ADD)
+		VALUES(#{id}, #{pw},
+		#{name}, #{mailAdd}, #{phoNum}, #{userType}, #{joinDate},
+		#{lastUpdDate}, #{picAdd})
+	</insert>
+
+	<update id="updateUserInfo" parameterType="com.deg2de.homepagests.dto.UserInfoChangeDto">
+		UPDATE USER_INFO SET USER_INFO_PW=#{pw},
+		USER_INFO_NAME=#{name}, USER_INFO_PHO_NUM=#{phoNum},
+		USER_INFO_LAST_UPD_DATE=#{lastUpdDate} WHERE USER_INFO_ID=#{id}
+	</update>
+	
+	<update id="updateUserPw">
+		UPDATE USER_INFO SET USER_INFO_PW=#{pw} WHERE USER_INFO_ID=#{id}
+	</update>
+	
+	<update id="updateUserPicAdd" parameterType="com.deg2de.homepagests.dto.UserPicAddChangeDto">
+		UPDATE USER_INFO SET USER_INFO_PIC_ADD=#{picAdd},
+		USER_INFO_LAST_UPD_DATE=#{lastUpdDate} WHERE USER_INFO_ID=#{id}
+	</update>
+	
+	<select id="selsetAllUserInfo" resultType="com.deg2de.homepagests.dto.UserInfoManageDto">  
+		SELECT USER_INFO_ID AS userId,
+		 USER_INFO_NAME AS userName,
+		 USER_INFO_JOIN_DATE AS joinDate
+		FROM USER_INFO
+	</select>
+	
+	<select id="selectmanageUserId" resultType="com.deg2de.homepagests.dto.UserInfoManageDto">  
+		SELECT USER_INFO_ID AS userId,
+		 USER_INFO_NAME AS userName,
+		 USER_INFO_JOIN_DATE AS joinDate
+		FROM USER_INFO WHERE
+		USER_INFO_ID = #{id}
+	</select>
+	
+	<select id="selectmanageUserName" resultType="com.deg2de.homepagests.dto.UserInfoManageDto">  
+		SELECT USER_INFO_ID AS userId,
+		 USER_INFO_NAME AS userName,
+		 USER_INFO_JOIN_DATE AS joinDate
+		FROM USER_INFO WHERE
+		USER_INFO_NAME = #{name}
+	</select>
+	
+	<delete id="deleteUserId">
+		DELETE FROM USER_INFO
+		WHERE USER_INFO_ID = #{id}
+	</delete>
+</mapper>
